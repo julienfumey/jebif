@@ -11,3 +11,8 @@ La clé d'association ne peut pas être créée si aucun concours n'est ouvert.
 
 À l'ouverture d'un nouveau concours, regénérer des clés d'association pour
 les utilisateurs existants qui sont dans la table bioinfuse et qui sont actifs.
+
+## Utilisateurs
+
+* Page de modification de profil pour l'utilisateur (champ role non utilisé)
+* Page de modification de role pour un utilisateur pour les administrateurs définis dans la table bioinfuse

@@ -7,8 +7,10 @@
 {% if user.is_authenticated %}
 <p>Ici on va mettre un message pour que les gens qui veulent s'inscrire ou se connecter puissent suivre le lien.
 <br>
-Connecté : <a href="/submit_video/">proposer une vidéo</a> ou <a href="/evaluate/">juger une vidéo</a></p>
+Connecté : <a href="/submit_video/">proposer une vidéo</a> ou <a href="/evaluate/">juger une vidéo</a>
+    ou <a href="/accounts/logout/">se déconnecter</a></p>
 {% else %}
-Non connecté : <a href="/connect/">se connecter</a> ou <a href="/subscribe/">s'inscrire</a></p>
+Non connecté : <a href="/accounts/login/">se connecter</a> ou
+<a href="/subscribe/">s'inscrire</a></p>
 {% endif %}
 {% endblock %}

@@ -7,8 +7,8 @@ class NewUserForm(forms.ModelForm):
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput())
     
     class Meta:
-    	model = User
-    	fields = ('username', 'first_name', 'last_name', 'password', 'email',)
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'password', 'email',)
 
 class SubscriptionForm(forms.ModelForm):
     class Meta:
@@ -23,12 +23,12 @@ class ConnectForm(forms.ModelForm):
 
 '''
 class NewChallenge(forms.ModelForm):
-	class Meta:
-		model = Challenge
-		exclude = ()
+    class Meta:
+        model = Challenge
+        exclude = ()
 
 class SubmitMovie(forms.ModelForm):
-	class Meta:
-		model = Movie
-		exclude = ()
+    class Meta:
+        model = Movie
+        exclude = ()
 '''

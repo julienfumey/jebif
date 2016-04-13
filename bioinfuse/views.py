@@ -20,15 +20,11 @@ def subscribe(request):
     registered = False
     context = base()
     if request.method == 'GET':
-    	user_form = NewUserForm()
+        user_form = NewUserForm()
         subs_form = SubscriptionForm()
-        #context['user_form']  = user_form
-        #context['subs_form']  = subs_form
     else:
-    	user_form = NewUserForm(request.POST)
+        user_form = NewUserForm(request.POST)
         subs_form = SubscriptionForm(request.POST)
-        #context['user_form']  = user_form
-        #context['subs_form']  = subs_form
 
         if user_form.is_valid() and subs_form.is_valid():
             user = user_form.save()
@@ -78,4 +74,3 @@ def connect(request):
     context['connect_form'] = connect_form
     
     return render(request, "connect.html", context)
-           

@@ -1,0 +1,28 @@
+<!doctype HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Bioinfuse :: {% block title %}{% endblock %}</title>
+        {% load staticfiles %}
+        <link type="text/css" href="{% static "css/stylesheet.css" %}" rel="stylesheet" />
+    </head>
+    <body>
+        <header id="mainheader"><a href="/"><p>&nbsp;</p></a></header>
+        <nav id="mainmenu">
+            <ul>
+                <li><a href="/" title="Revenir à l'accueil">Accueil</a></li>
+                {% for p in pages %}
+                	<li><a href="/p/{{p.id}}" title="Lire la page {{p.title}}">{{ p.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <section id="main">
+			{% block content %}{% endblock %}
+        </section>
+        <footer id="mainfooter">
+            <p>BioInfuse est un concours de vulgarisation de vidéo scientifique organisé par l'association <a href="https://jebif.fr">JeBiF</a><br />
+            Fièrement propulsé par <a href="https://www.djangoproject.com/">Django {{ version }}</a>, source disponible sur <a href="https://github.com/Norore/jebif/bioinfuse">GitHub</a><br />
+            Sauf mention contraire, le contenu du site est sous licence Creative Commons 2.0 by NC</p>
+        </footer>
+    </body>
+</html>

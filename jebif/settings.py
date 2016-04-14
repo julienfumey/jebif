@@ -24,6 +24,9 @@ ADMINS = (
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# Open a terminal and launch:
+# python -c 'import random; print "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)])'
+# Then copy paste the result in the SECRET_KEY variable
 SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!

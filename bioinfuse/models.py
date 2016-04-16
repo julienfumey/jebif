@@ -29,10 +29,10 @@ class Member(models.Model):
     associated_key = models.CharField("Clé", max_length=50)
 
 class Challenge(models.Model):
-    title = models.CharField(max_length=100)
-    is_open = models.BooleanField(default=False)
-    start_date = models.DateTimeField()
-    stop_date = models.DateTimeField()
+    title = models.CharField("Titre", max_length=100)
+    is_open = models.BooleanField("Ouvert", default=False)
+    start_date = models.DateTimeField("Date de début")
+    stop_date = models.DateTimeField("Date de fin")
 
 class AssociatedKey(models.Model):
     candidate = models.ForeignKey(Member)

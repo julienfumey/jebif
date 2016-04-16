@@ -1,70 +1,87 @@
 body {
-	margin: 0 auto;
-	background: #c5c5c5;
+    margin: 0 auto;
+    background: #c5c5c5;
 }
 
+/****************
+Main header style
+****************/
 header#mainheader {
-	width: 90%;
-	margin: 0 auto;
+    width: 90%;
+    margin: 0 auto;
 }
-
 header#mainheader a p {
-	background: url('/static/css/img/BioInfuse.png') no-repeat center;
-	height: 346px;
+    background: url('/static/css/img/BioInfuse.png') no-repeat center;
+    height: 200px;
 }
 
+/**************
+Main menu style
+**************/
 nav#mainmenu {
-	background: #68A7DC;
-	color: #0B071E;
-	line-height: 1.3em;
-	font-size: 1.2em;
+    background: #68A7DC;
+    color: #0B071E;
+    line-height: 1.3em;
+    font-size: 1.2em;
 }
 nav#mainmenu a {
-	color: inherit;
-	text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 nav#mainmenu a:hover {
-	color: #1F4683;
+    color: #1F4683;
 }
 nav#mainmenu ul {
-	list-style: none;
-	width: 90%;
-	margin: 0 auto;
+    list-style: none;
+    width: 90%;
+    margin: 0 auto;
 }
 
+/***********
+Main section
+***********/
 section#main {
-	width: 90%;
-	margin: 0 auto;
-	height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
 }
 section#main h1 {
-	font-size: 1.3em;
-	color: #3D6186;
-	text-decoration: underline;
+    font-size: 1.3em;
+    color: #3D6186;
+    text-decoration: underline;
 }
 
+/*********
+Form style
+*********/
 section#form form{
-	border: 1px solid #3D6186;
-	padding: 2px 4px;
+    border: 1px solid #3D6186;
+    padding: 2px 4px;
 }
 section#form label {
-	font-weight: bold;
-	color: #3D6186;
+    font-weight: bold;
+    color: #3D6186;
 }
 
+/***********
+Footer style
+***********/
 footer#mainfooter {
-	background: #254061;
-	margin-top: 2em;
-	position: relative;
-	bottom: 0;
+    background: #254061;
+    margin-top: 2em;
+    position: relative;
+    bottom: 0;
 }
 footer#mainfooter p {
-	width: 90%;
-	margin: 0 auto;
-	color: white;
-	text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    color: white;
+    text-align: center;
 }
 footer#mainfooter a {
-	color: #5BB5E6;
-	text-decoration: none;
+    color: #5BB5E6;
+    text-decoration: none;
+}
+footer#mainfooter a:hover {
+    color: cyan;
 }

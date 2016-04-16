@@ -16,12 +16,42 @@
                 {% endfor %}
             </ul>
         </nav>
-        <section id="main">
-			{% block content %}{% endblock %}
-        </section>
+        <div id="container">
+            <section id="main">
+                {% block content %}{% endblock %}
+            </section>
+            <aside>
+                {% if user.is_authenticated %}
+                <div id="options">
+                    <h1>Options utilisateur</h1>
+                    <ul>
+                        <li><a href="/edit_profile/">Modifier mon profil</a></li>
+                        {% if member.role == 'C' %}
+                            <li><a href="/submit_movie/">Soumettre une vidéo</a></li>
+                        {% elif member.role == 'J' %}
+                            <li><a href="/all_movies/">Voir les vidéos soumises</a></li>
+                        {% else %}
+                            <li><a href="/admin/">Administration du site</a></li>
+                        {% endif %}
+                        <li><a href="/accounts/logout/">Se déconnecter</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <div id="connection">
+                    <h1>Bienvenue sur BioInfuse</h1>
+                    <ul>
+                        <li><a href="/accounts/login/">Se connecter</a></li>
+                        <li><a href="/subscribe/">S'inscrire</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </aside>
+        </div>
         <footer id="mainfooter">
-            <p>BioInfuse est un concours de vulgarisation de vidéo scientifique organisé par l'association <a href="https://jebif.fr">JeBiF</a><br />
-            Fièrement propulsé par <a href="https://www.djangoproject.com/">Django {{ version }}</a>, source disponible sur <a href="https://github.com/Norore/jebif/bioinfuse">GitHub</a><br />
+            <p>BioInfuse est un concours de vidéo de vulgarisation scientifique organisé par l'association
+                <a href="https://jebif.fr">JeBiF</a><br />
+            Fièrement propulsé par <a href="https://www.djangoproject.com/">Django {{ version }}</a>,
+                source disponible sur <a href="https://github.com/Norore/jebif/tree/master/bioinfuse">GitHub</a><br />
             Sauf mention contraire, le contenu du site est sous licence Creative Commons 2.0 by NC</p>
         </footer>
     </body>

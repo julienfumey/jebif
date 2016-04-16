@@ -1,24 +1,33 @@
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
-from models import *
-from django.db.models import Count
+from bioinfuse.models import *
+#from django.db.models import Count
 from bioinfuse.forms import *
 from django.utils.timezone import now
-from django.contrib.auth import update_session_auth_hash, authenticate, login
+from django.contrib.auth import authenticate, login
 
 
-def base():
-    context = { 'version': get_version(),
-              }
+def base(request):
+    context = {
+        'version': get_version(),
+    }
+    if request.user.id:
+        member_id = request.user.id
+        context['member'] = Member.objects.get(user=member_id)
+    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')
+    if challenge:
+        context['challenge'] = challenge[0]
+    else:
+        context['challenge.is_open'] = False
     return context
 
 def index(request):
-    context = base()
+    context = base(request)
     return render(request, "home.html", context)
 
 def subscribe(request):
     registered = False
-    context = base()
+    context = base(request)
     if request.method == 'GET':
         user_form = NewUserForm()
         subs_form = SubscriptionForm()
@@ -27,10 +36,12 @@ def subscribe(request):
         subs_form = SubscriptionForm(request.POST)
 
         if user_form.is_valid() and subs_form.is_valid():
+            # register new user
             user = user_form.save()
             user.set_password(user.password) # use set_password to hash enter password
             user.save()
             show_name = subs_form.cleaned_data['show_name']
+            # register new member
             member = subs_form.save(commit=False)
             member.user = user
             member.save()
@@ -46,7 +57,7 @@ def subscribe(request):
 
 def connect(request):
     connected = False
-    context = base()
+    context = base(request)
     if request.method == 'GET':
         connect_form = ConnectForm()
     else:

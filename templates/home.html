@@ -4,13 +4,24 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
-<p>Ici on va mettre un message pour que les gens qui veulent s'inscrire ou se connecter puissent suivre le lien.
-<br>
-Connecté : <a href="/submit_video/">proposer une vidéo</a> ou <a href="/evaluate/">juger une vidéo</a>
-    ou <a href="/accounts/logout/">se déconnecter</a></p>
+{% if challenge.is_open == True %}
+    {% if user.is_authenticated %}
+    <p>Bonjour {{member.show_name}},
+        le concours <strong>{{ challenge.title }}</strong> ouvert du
+        {{ challenge.start_date|date:"d M Y" }}
+        à {{ challenge.start_date|date:"H\hh" }} au
+        {{ challenge.stop_date|date:"d M Y" }}
+        à {{ challenge.stop_date|date:"H\hh" }}.</p>
+    {% else %}
+    <p>Le concours <strong>{{ challenge.title }}</strong> est ouvert  du
+        {{ challenge.start_date|date:"d M Y" }}
+        à {{ challenge.start_date|date:"H\hh" }} au
+        {{ challenge.stop_date|date:"d M Y" }}
+        à {{ challenge.stop_date|date:"H\hh" }}.<br>
+    Si vous souhaitez participer, n'hésitez pas à vous <a href="/subscribe/">inscrire</a> dès à présent !</p>
+    {% endif %}
 {% else %}
-Non connecté : <a href="/accounts/login/">se connecter</a> ou
-<a href="/subscribe/">s'inscrire</a></p>
+<p>Aucun concours n'est ouvert pour l'instant. Merci pour l'intérêt que vous portez à BioInfuse !<br>
+L'équipe de JeBiF.</p>
 {% endif %}
 {% endblock %}

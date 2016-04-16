@@ -4,13 +4,13 @@
 
 * [ ] Inscription d'un nouvel utilisateur :
     * [x] Utilise la table User de Django
-    * [x]Étend la table avec les champs :
+    * [x] Étend la table avec les champs :
         * [x] show_name : le nom affiché sur BioInfuse
         * [x] role : le rôle de l'utilisateur  (concurrent, jury, admin)
         * [ ] associated_key : la clé unique associée à  l'utilisateur pour le concours
 * [x] Page de connection
 * [x] Page de deconnection
-* [ ] Ajouter automatiquement une nouvelle clé d'association pour l'utilisateur
+* [ ] Ajouter automatiquement une nouvelle clé d'association pour l'utilisateur à la création du compte
 * [ ] Associer la clé au concours
 
 ## Clé d'association

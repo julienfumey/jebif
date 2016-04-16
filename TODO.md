@@ -2,7 +2,7 @@
 
 ## Inscription
 
-* [ ]Inscription d'un nouvel utilisateur :
+* [ ] Inscription d'un nouvel utilisateur :
     * [x] Utilise la table User de Django
     * [x]Étend la table avec les champs :
         * [x] show_name : le nom affiché sur BioInfuse

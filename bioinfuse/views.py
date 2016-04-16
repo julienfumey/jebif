@@ -1,10 +1,9 @@
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
 from bioinfuse.models import *
-#from django.db.models import Count
+# from django.db.models import Count
 from bioinfuse.forms import *
-from django.utils.timezone import now
-from django.contrib.auth import authenticate, login
+# from django.utils.timezone import now
 
 
 def base(request):
@@ -21,9 +20,11 @@ def base(request):
         context['challenge.is_open'] = False
     return context
 
+
 def index(request):
     context = base(request)
     return render(request, "home.html", context)
+
 
 def subscribe(request):
     registered = False
@@ -38,50 +39,50 @@ def subscribe(request):
         if user_form.is_valid() and subs_form.is_valid():
             # register new user
             user = user_form.save()
-            user.set_password(user.password) # use set_password to hash enter password
+            user.set_password(user.password)  # use set_password to hash enter password
             user.save()
             show_name = subs_form.cleaned_data['show_name']
             # register new member
             member = subs_form.save(commit=False)
             member.user = user
             member.save()
-            
             registered = True
             context['show_name'] = show_name
 
-    context['user_form']  = user_form
-    context['subs_form']  = subs_form
+    context['user_form'] = user_form
+    context['subs_form'] = subs_form
     context['registered'] = registered
 
     return render(request, "subscribe.html", context)
 
-def connect(request):
-    connected = False
+
+def edit_profile(request, member):
     context = base(request)
+    get_member = Member.objects.get(user=member)
+    get_user = User.objects.get(id=member)
     if request.method == 'GET':
-        connect_form = ConnectForm()
+        user_form = EditUserForm({'first_name': get_user.first_name,
+                             'last_name': get_user.last_name,
+                             'email': get_user.email})
+        member_form = EditProfileForm({'show_name': get_member.show_name})
     else:
-        connect_form = ConnectForm(request.POST)
+        user_form = EditUserForm(request.POST)
+        member_form = EditProfileForm(request.POST)
 
-        if connect_form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            context['username'] = username
-            if user:
-                if user.is_active:
-                    login(request, user)
-                    member = Member.objects.get(user=user)
-                    connected = True
-                    context['member'] = member
-                else:
-                    error_msg = "Compte inactif"
-                    context['error_msg'] = error_msg
-            else:
-                error_msg = "Nom d'utilisateur inconnu"
-                context['error_msg'] = error_msg
-
-    context['connected'] = connected
-    context['connect_form'] = connect_form
-    
-    return render(request, "connect.html", context)
+        if user_form.is_valid() and member_form.is_valid():
+            first_name = user_form.cleaned_data['first_name']
+            last_name = user_form.cleaned_data['last_name']
+            email = user_form.cleaned_data['email']
+            show_name = member_form.cleaned_data['show_name']
+            # update page
+            get_user.first_name = first_name
+            get_user.last_name = last_name
+            get_user.email = email
+            get_user.save()
+            get_member.show_name = show_name
+            get_member.save()
+            return HttpResponseRedirect('/')
+    context['profile_id'] = get_member.user.id
+    context['user_form'] = user_form
+    context['member_form'] = member_form
+    return render(request, "edit_profile.html", context)

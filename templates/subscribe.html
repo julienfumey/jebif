@@ -21,12 +21,8 @@ Inscription de nouveau membre
         <h1>Création de compte</h1>
     </header>
     <form action="/subscribe/" method="post">{% csrf_token %}
-    	<fieldset>
-	    	{{ user_form.as_p }}
-	    </fieldset>
-	    <fieldset>
-			{{ subs_form.as_p }}
-		</fieldset>
+		{{ user_form.as_p }}
+		{{ subs_form.as_p }}
 		<input type="reset" value="Effacer">&nbsp;
         <input type="submit" value="S'inscrire">
     </form>

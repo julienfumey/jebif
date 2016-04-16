@@ -9,10 +9,12 @@ Main header style
 header#mainheader {
     width: 90%;
     margin: 0 auto;
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
-header#mainheader a p {
-    background: url('/static/css/img/BioInfuse.png') no-repeat center;
-    height: 200px;
+header#mainheader a img {
+    margin: 0 auto;
 }
 
 /**************
@@ -33,7 +35,12 @@ nav#mainmenu a:hover {
 }
 nav#mainmenu ul {
     list-style: none;
-    width: 90%;
+    width: 80%;
+    margin: 0 auto;
+}
+
+div#container {
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -41,7 +48,8 @@ nav#mainmenu ul {
 Main section
 ***********/
 section#main {
-    width: 90%;
+    float: left;
+    width: 80%;
     margin: 0 auto;
     height: 100%;
 }
@@ -52,21 +60,35 @@ section#main h1 {
 }
 
 /*********
+Right main menu
+*********/
+div#container aside{
+    float: right;
+    width: 20%;
+}
+
+/*********
 Form style
 *********/
 section#form form{
     border: 1px solid #3D6186;
     padding: 2px 4px;
+    margin-bottom: 1em;
+    border-radius: 15px;
 }
 section#form label {
     font-weight: bold;
     color: #3D6186;
+}
+section#form span.helptext {
+    font-size: 0.7em;
 }
 
 /***********
 Footer style
 ***********/
 footer#mainfooter {
+    clear: both;
     background: #254061;
     margin-top: 2em;
     position: relative;

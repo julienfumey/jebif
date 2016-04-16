@@ -7,7 +7,7 @@
         <link type="text/css" href="{% static "css/stylesheet.css" %}" rel="stylesheet" />
     </head>
     <body>
-        <header id="mainheader"><a href="/"><p>&nbsp;</p></a></header>
+        <header id="mainheader"><a href="/"><img src="/static/img/BioInfuse.png" height="300px"></a></header>
         <nav id="mainmenu">
             <ul>
                 <li><a href="/" title="Revenir à l'accueil">Accueil</a></li>
@@ -25,7 +25,7 @@
                 <div id="options">
                     <h1>Options utilisateur</h1>
                     <ul>
-                        <li><a href="/edit_profile/">Modifier mon profil</a></li>
+                        <li><a href="/edit_profile/{{user.id}}/">Modifier mon profil</a></li>
                         {% if member.role == 'C' %}
                             <li><a href="/submit_movie/">Soumettre une vidéo</a></li>
                         {% elif member.role == 'J' %}

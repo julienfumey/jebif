@@ -13,6 +13,6 @@ urlpatterns = [
     # Member
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-    #url(r'connect/$', bviews.connect, name='connect'),
     url(r'subscribe/$', bviews.subscribe, name='subscribe'),
+    url(r'edit_profile/(?P<member>[0-9]+)', bviews.edit_profile, name='edit_profile'),
 ]

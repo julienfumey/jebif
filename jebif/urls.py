@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'subscribe/$', bviews.subscribe, name='subscribe'),
     url(r'edit_profile/(?P<member>[0-9]+)', bviews.edit_profile, name='edit_profile'),
+    url(r'manage_members', bviews.list_members, name="manage_members"),
+    url(r'edit_member/(?P<member>[0-9]+)', bviews.edit_member, name="edit_member"),
 ]

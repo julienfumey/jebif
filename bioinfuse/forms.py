@@ -27,11 +27,15 @@ class EditProfileForm(forms.ModelForm):
         model = Member
         fields = ('show_name',)
 
-class ConnectForm(forms.ModelForm):
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput())
+class ManageUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('first_name', 'last_name', 'email')
+
+class ManageMemberForm(forms.ModelForm):
+    class Meta:
+        model = Member
+        fields = ('show_name', 'role')
 
 '''
 class NewChallenge(forms.ModelForm):

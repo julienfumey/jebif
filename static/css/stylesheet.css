@@ -49,14 +49,16 @@ Main section
 ***********/
 section#main {
     float: left;
-    width: 80%;
+    width: 78%;
     margin: 0 auto;
     height: 100%;
 }
 section#main h1 {
     font-size: 1.3em;
-    color: #3D6186;
-    text-decoration: underline;
+    background: #3D6186;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 10px 10px 0 0;
 }
 
 /*********
@@ -66,14 +68,80 @@ div#container aside{
     float: right;
     width: 20%;
 }
+div#container aside div {
+    background: #ddd;
+    border-radius: 10px;
+    margin-bottom: 0.5em;
+}
+div#container aside h2 {
+    font-size: 1.2em;
+    margin: 2px 0;
+    color: #5BB5E6;
+    background: #254061;
+    padding: 2px 4px;
+    text-shadow: 1px 1px 1px #b8b8b8;
+    border-radius: 5px 5px 0 0;
+}
+div#container aside div#connection ul {
+    list-style: none;
+    margin: 0;
+    padding: 2px 4px;
+}
+div#container aside div#options ul {
+    list-style: none;
+    margin: 0;
+    padding: 2px 4px;
+}
+div#container aside p {
+    margin: 0;
+    padding: 2px 4px;
+}
+
+/****************
+Manage user style
+****************/
+section#manage article {
+    background: #ddd;
+    border-radius: 10px;
+}
+section#manage article p {
+    padding: 2px 4px;
+}
+section#manage article table {
+    margin-bottom: 1em;
+}
+section#manage table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+section#manage table thead {
+    background: #254061;
+    color: white;
+    font-weight: bold;
+}
+section#manage table td {
+    border: 1px solid #254061;
+    padding: 2px 4px;
+}
 
 /*********
 Form style
 *********/
-section#form form{
-    border: 1px solid #3D6186;
+section#form article {
+    background: #ddd;
+    margin-bottom: 1em;
+    border-radius: 10px;
+}
+section#form article p {
+    padding: 2px 4px;
+}
+section#form form, {
     padding: 2px 4px;
     margin-bottom: 1em;
+}
+section#form form fieldset {
+    border: 1px solid #3D6186;
     border-radius: 15px;
 }
 section#form label {
@@ -82,6 +150,29 @@ section#form label {
 }
 section#form span.helptext {
     font-size: 0.7em;
+}
+section#form input[type='submit'] {
+    background: #4F647C;
+    border: 1px solid #1F4683;
+    color: white;
+    font-size: 1.1em;
+}
+section#form input[type='reset'] {
+    background: #FF6D6D;
+    border: 1px solid #F00;
+    color: white;
+    font-size: 1.1em;
+}
+
+/*************
+Links style
+**********/
+div#container a {
+    color: #1F4683;
+    text-decoration: none;
+}
+div#container a:hover {
+    color: #0B071E;
 }
 
 /***********

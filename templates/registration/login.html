@@ -26,12 +26,14 @@ Connection
             <h1>Connection</h1>
         </header>
         <form action="{% url 'django.contrib.auth.views.login' %}" method="post">{% csrf_token %}
-            {{ form.username.label_tag }}
-            {{ form.username }}<br>
-            {{ form.password.label_tag }}
-            {{ form.password }}<br>
-            <input type="reset" value="Effacer">&nbsp;
-            <input type="submit" value="Se connecter">
+            <fieldset>
+                {{ form.username.label_tag }}
+                {{ form.username }}<br>
+                {{ form.password.label_tag }}
+                {{ form.password }}<br>
+                <input type="reset" value="Effacer">&nbsp;
+                <input type="submit" value="Se connecter">
+            </fieldset>
         </form>
         {% endif %}
     </article>

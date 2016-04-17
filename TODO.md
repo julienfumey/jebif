@@ -7,11 +7,11 @@
     * [x] Étend la table avec les champs :
         * [x] show_name : le nom affiché sur BioInfuse
         * [x] role : le rôle de l'utilisateur  (concurrent, jury, admin)
-        * [ ] associated_key : la clé unique associée à  l'utilisateur pour le concours
+        * [x] associated_key : la clé unique associée à  l'utilisateur pour le concours
 * [x] Page de connection
 * [x] Page de deconnection
-* [ ] Ajouter automatiquement une nouvelle clé d'association pour l'utilisateur à la création du compte
-* [ ] Associer la clé au concours
+* [x] Ajouter automatiquement une nouvelle clé d'association pour l'utilisateur à la création du compte
+* [x] Associer la clé au concours
 
 ## Clé d'association
 
@@ -23,6 +23,8 @@ les utilisateurs existants qui sont dans la table bioinfuse et qui sont actifs.
 ## Utilisateurs
 
 * [x] Page de modification de profil pour l'utilisateur (champ role non utilisé)
+* [ ] Page de gestion des membres pour les administrateurs définis dans la table
+bioinfuse
 * [ ] Page de modification de role pour un utilisateur pour les administrateurs
 définis dans la table bioinfuse
 * [ ] Page de soumission de vidéo pour l'utilisateur Concurrent
@@ -31,4 +33,4 @@ définis dans la table bioinfuse
 
 ## Soumission d'une vidéo
 
-* [ ] Basé sur l'API de DailyMotion en précisant le compte de JeBiF
+* [ ] Basée sur l'API de DailyMotion en précisant le compte de JeBiF

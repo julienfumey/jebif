@@ -1,14 +1,19 @@
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
 from bioinfuse.models import *
-# from django.db.models import Count
 from bioinfuse.forms import *
 # from django.utils.timezone import now
 
 
 def base(request):
+    total_member = Member.objects.count()
+    total_challenger = Member.objects.filter(role='C').count()
+    total_jury = Member.objects.filter(role='J').count()
     context = {
         'version': get_version(),
+        'total_member': total_member,
+        'total_challenger': total_challenger,
+        'total_jury': total_jury,
     }
     if request.user.id:
         member_id = request.user.id
@@ -100,3 +105,54 @@ def edit_profile(request, member):
     context['user_form'] = user_form
     context['member_form'] = member_form
     return render(request, "edit_profile.html", context)
+
+def list_members(request):
+    context = base(request)
+    members = Member.objects.all()
+    if request.user.id:
+        role = Member.objects.get(user=request.user.id).role
+    else:
+        role = 'I'
+    context['members'] = members
+    context['role'] = role
+    return render(request, "manage_members.html", context)
+
+def edit_member(request, member):
+    context = base(request)
+    get_member = Member.objects.get(user=member)
+    changed_member = get_member
+    get_user = User.objects.get(id=member)
+    if request.user.id:
+        role = Member.objects.get(user=request.user.id).role
+    else:
+        role = 'I'
+    if request.method == 'GET':
+        user_form = ManageUserForm({'first_name': get_user.first_name,
+                                  'last_name': get_user.last_name,
+                                  'email': get_user.email})
+        member_form = ManageMemberForm({'show_name': get_member.show_name,
+                                       'role': get_member.role})
+    else:
+        user_form = ManageUserForm(request.POST)
+        member_form = ManageMemberForm(request.POST)
+
+        if user_form.is_valid() and member_form.is_valid():
+            first_name = user_form.cleaned_data['first_name']
+            last_name = user_form.cleaned_data['last_name']
+            email = user_form.cleaned_data['email']
+            show_name = member_form.cleaned_data['show_name']
+            member_role = member_form.cleaned_data['role']
+            # update page
+            get_user.first_name = first_name
+            get_user.last_name = last_name
+            get_user.email = email
+            get_user.save()
+            get_member.show_name = show_name
+            get_member.role = member_role
+            get_member.save()
+            return HttpResponseRedirect('manage_members.html')
+    context['role'] = role
+    context['changed_member'] = changed_member
+    context['user_form'] = user_form
+    context['member_form'] = member_form
+    return render(request, "edit_member.html", context)

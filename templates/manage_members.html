@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Gestion des membres
+
+{% endblock %}
+
+{% block content %}
+
+<section id="manage">
+    <article>
+	{% if user.is_authenticated and role == 'A' %}
+    <header>
+        <h1>Liste des membres</h1>
+    </header>
+    <p>
+        <table>
+        <thead>
+            <td>Nom utilisateur</td>
+            <td>Nom affiché</td>
+            <td>Rôle</td>
+            <td>Date d'inscription</td>
+        </thead>
+        {% for member in members %}
+        <tr>
+            <td><a href="/edit_member/{{member.user.id}}/">{{member.user}}</a></td>
+            <td>{{member.show_name}}</td>
+            <td>{{member.get_role_display}}</td>
+            <td>{{member.user.date_joined|date:"d M Y à H\hh"}}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Aucun membre enregistré pour l'instant.</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </p>
+    {% else %}
+        <p>
+            Vous n'êtes pas autorisé à gérer les membres. <a href="/">Retour à la page d'accueil</a>.
+        </p>
+	{% endif %}
+	</article>
+</section>
+
+{% endblock %}

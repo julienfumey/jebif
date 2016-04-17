@@ -21,10 +21,12 @@ Inscription de nouveau membre
         <h1>Création de compte</h1>
     </header>
     <form action="/subscribe/" method="post">{% csrf_token %}
-		{{ user_form.as_p }}
-		{{ subs_form.as_p }}
-		<input type="reset" value="Effacer">&nbsp;
-        <input type="submit" value="S'inscrire">
+		<fieldset>
+			{{ user_form.as_p }}
+			{{ subs_form.as_p }}
+			<input type="reset" value="Effacer">&nbsp;
+			<input type="submit" value="S'inscrire">
+		</fieldset>
     </form>
 	{% endif %}
 	</article>

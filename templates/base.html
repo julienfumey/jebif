@@ -23,22 +23,22 @@
             <aside>
                 {% if user.is_authenticated %}
                 <div id="options">
-                    <h1>Options utilisateur</h1>
+                    <h2>Options utilisateur</h2>
                     <ul>
                         <li><a href="/edit_profile/{{user.id}}/">Modifier mon profil</a></li>
                         {% if member.role == 'C' %}
-                            <li><a href="/submit_movie/">Soumettre une vidéo</a></li>
+                            <li>Soumettre une vidéo</li>
                         {% elif member.role == 'J' %}
-                            <li><a href="/all_movies/">Voir les vidéos soumises</a></li>
+                            <li>Voir les vidéos soumises</li>
                         {% else %}
-                            <li><a href="/admin/">Administration du site</a></li>
+                            <li><a href="/manage_members/">Gérer les membres</a></li>
                         {% endif %}
                         <li><a href="/accounts/logout/">Se déconnecter</a></li>
                     </ul>
                 </div>
                 {% else %}
                 <div id="connection">
-                    <h1>Bienvenue sur BioInfuse</h1>
+                    <h2>Bienvenue sur BioInfuse</h2>
                     <ul>
                         <li><a href="/accounts/login/">Se connecter</a></li>
                         <li><a href="/subscribe/">S'inscrire</a></li>
@@ -46,13 +46,13 @@
                 </div>
                 {% endif %}
                 <div id="statistics">
-                    <h1>BioInfuse en chiffres</h1>
-                    <ul>
-                        <li>Nombre d'inscrits : {{ total_member }}</li>
-                        <li>Concurrents : {{ total_challenger }}</li>
-                        <li>Jury : {{ total_jury }}</li>
-                        <li>Nombre de vidéos soumises : {{ total_movie }}</li>
-                    </ul>
+                    <h2>BioInfuse en chiffres</h2>
+                    <p>
+                        Nombre d'inscrits : <strong>{{ total_member }}</strong><br>
+                        Concurrents : <strong>{{ total_challenger }}</strong><br>
+                        Jury : <strong>{{ total_jury }}</strong><br>
+                        Nombre de vidéos soumises : <strong>{{ total_movie }}</strong>
+                    </p>
                 </div>
             </aside>
         </div>

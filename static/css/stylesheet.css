@@ -76,10 +76,9 @@ div#container aside div {
 div#container aside h2 {
     font-size: 1.2em;
     margin: 2px 0;
-    color: #5BB5E6;
-    background: #254061;
+    color: white;
+    background:  #3D6186;
     padding: 2px 4px;
-    text-shadow: 1px 1px 1px #b8b8b8;
     border-radius: 5px 5px 0 0;
 }
 div#container aside div#connection ul {

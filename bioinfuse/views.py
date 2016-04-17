@@ -29,6 +29,7 @@ def index(request):
 def subscribe(request):
     registered = False
     context = base(request)
+    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')[0]
     if request.method == 'GET':
         user_form = NewUserForm()
         subs_form = SubscriptionForm()
@@ -40,11 +41,24 @@ def subscribe(request):
             # register new user
             user = user_form.save()
             user.set_password(user.password)  # use set_password to hash enter password
+            user_member = user.id
             user.save()
             show_name = subs_form.cleaned_data['show_name']
             # register new member
             member = subs_form.save(commit=False)
             member.user = user
+            member.save()
+            # generate associated key for new member
+            import random
+            key = "".join([random.choice("abcdefghijklmnopqrstuvwxyz012"
+                                         "3456789!@#$%^&*(-_=+)")
+                           for i in range(50)])
+            member_key = AssociatedKey.objects.create(candidate=member,
+                                                      challenge=challenge,
+                                                      associated_key=key)
+            member_key.save()
+            member = Member.objects.get(user=user_member)
+            member.associated_key = member_key.associated_key
             member.save()
             registered = True
             context['show_name'] = show_name

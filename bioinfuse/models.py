@@ -26,7 +26,10 @@ class Member(models.Model):
         ('A', 'Admin')
     )
     role = models.CharField("Rôle", max_length=1, choices=list_role, default='C')
-    associated_key = models.CharField("Clé", max_length=50)
+    associated_key = models.CharField("Clé associée", max_length=50)
+
+    def __unicode__(self):
+        return self.user.username
 
 class Challenge(models.Model):
     title = models.CharField("Titre", max_length=100)
@@ -34,15 +37,19 @@ class Challenge(models.Model):
     start_date = models.DateTimeField("Date de début")
     stop_date = models.DateTimeField("Date de fin")
 
+    def __unicode__(self):
+        return self.title
+
 class AssociatedKey(models.Model):
     candidate = models.ForeignKey(Member)
+    challenge = models.ForeignKey(Challenge)
     associated_key = models.CharField(max_length=50)
 
 class Movie(models.Model):
-    challenge = models.OneToOneField(Challenge)
+    challenge = models.ForeignKey(Challenge)
+    associated_key = models.ForeignKey(AssociatedKey)
     title = models.CharField(max_length=120)
     movie_url = models.URLField(max_length=200)
-    associated_key = models.ForeignKey(AssociatedKey)
     description = models.TextField()
     submit_date = models.DateTimeField()
     published = models.BooleanField(default=False)

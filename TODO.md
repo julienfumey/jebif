@@ -23,9 +23,9 @@ les utilisateurs existants qui sont dans la table bioinfuse et qui sont actifs.
 ## Utilisateurs
 
 * [x] Page de modification de profil pour l'utilisateur (champ role non utilisé)
-* [ ] Page de gestion des membres pour les administrateurs définis dans la table
+* [X] Page de gestion des membres pour les administrateurs définis dans la table
 bioinfuse
-* [ ] Page de modification de role pour un utilisateur pour les administrateurs
+* [X] Page de modification de role pour un utilisateur pour les administrateurs
 définis dans la table bioinfuse
 * [ ] Page de soumission de vidéo pour l'utilisateur Concurrent
 * [ ] Page des vidéos soumises pour l'utilisateur Jury

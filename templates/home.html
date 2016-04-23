@@ -6,8 +6,8 @@
 
 {% if challenge.is_open == True %}
     {% if user.is_authenticated %}
-    <p>Bonjour {{member.show_name}},
-        le concours <strong>{{ challenge.title }}</strong> ouvert du
+    <p>Bonjour <a href="/edit_profile/{{user.id}}/">{{member.show_name}}</a>,
+        le concours <strong>{{ challenge.title }}</strong> est ouvert du
         {{ challenge.start_date|date:"d M Y" }}
         à {{ challenge.start_date|date:"H\hh" }} au
         {{ challenge.stop_date|date:"d M Y" }}

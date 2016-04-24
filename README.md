@@ -16,3 +16,12 @@ spécifiquement pour ce concours
 * pour les membres du jury, de juger les différentes vidéos proposés par les concurrents
 * pour les administrateurs, différentes actions pour gérer les concours (création d'un nouveau
 concours, gestion des membres inscrits, rédaction d'information sur les concours)
+
+### Dépendances
+
+* Dailymotion : `pip install dailymotion`
+* urllib3, module connection : `pip install --upgrade urllib3`
+* parallelpython: `pip install python-pp`
+
+Required for SSL connection:
+* pip install pyopenssl ndg-httpsclient pyasn1

@@ -28,10 +28,13 @@
                         <li><a href="/edit_profile/{{user.id}}/">Modifier mon profil</a></li>
                         {% if member.role == 'C' %}
                             <li>Soumettre une vidéo</li>
-                        {% elif member.role == 'J' %}
+                        {% elif member.role == 'J'  %}
                             <li>Voir les vidéos soumises</li>
-                        {% else %}
+                        {% elif member.role == 'A' %}
                             <li><a href="/manage_members/">Gérer les membres</a></li>
+                        {% else %}
+                            <li>Oups ! Il semble que vous n'ayez pas de rôle attribué.
+                                Prévenez un administrateur afin qu'il vous assigne un rôle !</li>
                         {% endif %}
                         <li><a href="/accounts/logout/">Se déconnecter</a></li>
                     </ul>
@@ -51,6 +54,7 @@
                         Nombre d'inscrits : <strong>{{ total_member }}</strong><br>
                         Concurrents : <strong>{{ total_challenger }}</strong><br>
                         Jury : <strong>{{ total_jury }}</strong><br>
+                        Admin : <strong>{{ total_admin }}</strong><br>
                         Nombre de vidéos soumises : <strong>{{ total_movie }}</strong>
                     </p>
                 </div>

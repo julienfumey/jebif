@@ -9,11 +9,13 @@ def base(request):
     total_member = Member.objects.count()
     total_challenger = Member.objects.filter(role='C').count()
     total_jury = Member.objects.filter(role='J').count()
+    total_admin = Member.objects.filter(role='A').count()
     context = {
         'version': get_version(),
         'total_member': total_member,
         'total_challenger': total_challenger,
         'total_jury': total_jury,
+        'total_admin': total_admin,
     }
     if request.user.id:
         member_id = request.user.id
@@ -106,6 +108,7 @@ def edit_profile(request, member):
     context['member_form'] = member_form
     return render(request, "edit_profile.html", context)
 
+
 def list_members(request):
     context = base(request)
     members = Member.objects.all()
@@ -116,6 +119,7 @@ def list_members(request):
     context['members'] = members
     context['role'] = role
     return render(request, "manage_members.html", context)
+
 
 def edit_member(request, member):
     context = base(request)
@@ -156,3 +160,16 @@ def edit_member(request, member):
     context['user_form'] = user_form
     context['member_form'] = member_form
     return render(request, "edit_member.html", context)
+
+
+def submit_movie(request, member):
+    context = base(request)
+    role = Member.objects.get(user=member).role
+    if request.method == 'GET':
+        submit_movie_form = SubmitMovieForm({'submit_date': now()})
+    else:
+        submit_movie_form = SubmitMovieForm(request.POST)
+
+    context['submit_movie_form'] = submit_movie_form
+    context['role'] = role
+    return render(request, "submit_movie.html", context)

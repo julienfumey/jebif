@@ -47,16 +47,27 @@ class Challenge(models.Model):
 class AssociatedKey(models.Model):
     candidate = models.ForeignKey(Member)
     challenge = models.ForeignKey(Challenge)
-    associated_key = models.CharField(max_length=50)
+    associated_key = models.CharField("Clé d'association", max_length=50)
+
+    def __unicode__(self):
+        return self.associated_key
 
 class Movie(models.Model):
     challenge = models.ForeignKey(Challenge)
     associated_key = models.ForeignKey(AssociatedKey)
-    title = models.CharField(max_length=120)
-    movie_url = models.URLField(max_length=200)
-    description = models.TextField()
-    submit_date = models.DateTimeField()
-    published = models.BooleanField(default=False)
+    title = models.CharField("Titre", max_length=120,
+                             help_text="Ce titre sera aussi utilisé sur "
+                                       "notre compte DailyMotion")
+    movie_url = models.URLField("Lien vers la vidéo", max_length=200)
+    description = models.TextField("Description",
+                                   help_text="Cette description sera aussi "
+                                             "utilisée sur notre compte "
+                                             "DailyMotion")
+    submit_date = models.DateTimeField("Date de soumission",
+                                       help_text="La date doit être insérée "
+                                                 "sous forme jj/mm/aaaa "
+                                                 "hh:mm:ss")
+    published = models.BooleanField("Publié", default=False)
 
 """
 class Vote(models.Model):

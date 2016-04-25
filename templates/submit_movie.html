@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Soumetre une vidéo
+
+{% endblock %}
+
+{% block content %}
+
+<section id="form">
+    <article>
+	{% if user.is_authenticated and role == 'C' %}
+    <header>
+        <h1>Soumission d'une vidéo</h1>
+    </header>
+    <form action="/submit_movie/{{ user.id }}" method="post">{% csrf_token %}
+        <fieldset>
+            {{ submit_movie_form.as_p }}
+            <input type="submit" value="Mettre à jour">
+        </fieldset>
+    </form>
+    <p class="info">Une fois que vous aurez validé le formulaire, vous serez automatiquement
+    redirigé à la page d'accueil.</p>
+        {% else %}
+        <p>
+            Vous n'êtes pas autorisé à soumettre une vidéo. <a href="/">Retour à la page d'accueil</a>.
+        </p>
+	{% endif %}
+	</article>
+</section>
+
+{% endblock %}

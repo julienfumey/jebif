@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'edit_profile/(?P<member>[0-9]+)', bviews.edit_profile, name='edit_profile'),
     url(r'manage_members', bviews.list_members, name="manage_members"),
     url(r'edit_member/(?P<member>[0-9]+)', bviews.edit_member, name="edit_member"),
+    url(r'submit_movie/(?P<member>[0-9]+)$', bviews.submit_movie, name="submit_movie"),
 ]

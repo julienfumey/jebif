@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from models import *
 from django.contrib.auth.models import User
-from django.contrib.auth import update_session_auth_hash
 
 class NewUserForm(forms.ModelForm):
     password = forms.CharField(label="Mot de passe",
@@ -42,9 +42,12 @@ class NewChallenge(forms.ModelForm):
     class Meta:
         model = Challenge
         exclude = ()
+'''
 
-class SubmitMovie(forms.ModelForm):
+class SubmitMovieForm(forms.ModelForm):
+#    submit_date = forms.DateTimeField(label="Date de soumission",
+#                                      widget=forms.DateTimeInput())
+    file_movie = forms.FileField(label="Votre vidéo")
     class Meta:
         model = Movie
-        exclude = ()
-'''
+        exclude = ('associated_key', 'movie_url', 'published')

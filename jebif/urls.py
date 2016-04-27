@@ -9,13 +9,13 @@ urlpatterns = [
     # Administration
     url(r'^admin/', include(admin.site.urls)),
     # Home
-    url(r'^$', bviews.index, name='index'),
+    url(r'^bioinfuse/$', bviews.index, name='index'),
     # Member
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-    url(r'subscribe/$', bviews.subscribe, name='subscribe'),
-    url(r'edit_profile/(?P<member>[0-9]+)', bviews.edit_profile, name='edit_profile'),
-    url(r'manage_members', bviews.list_members, name="manage_members"),
-    url(r'edit_member/(?P<member>[0-9]+)', bviews.edit_member, name="edit_member"),
-    url(r'submit_movie/(?P<member>[0-9]+)$', bviews.submit_movie, name="submit_movie"),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/bioinfuse/'}),
+    url(r'bioinfuse/subscribe/$', bviews.subscribe, name='subscribe'),
+    url(r'bioinfuse/edit_profile/(?P<member>[0-9]+)', bviews.edit_profile, name='edit_profile'),
+    url(r'bioinfuse/manage_members', bviews.list_members, name="manage_members"),
+    url(r'bioinfuse/edit_member/(?P<member>[0-9]+)', bviews.edit_member, name="edit_member"),
+    url(r'bioinfuse/submit_movie/(?P<member>[0-9]+)$', bviews.submit_movie, name="submit_movie"),
 ]

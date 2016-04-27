@@ -17,9 +17,9 @@ Connection
         <p>Félicitations pour votre connection {{ show_name }} !<br>
             {% if member.role == "C" %}
             Toute l'équipe de BioInfuse vous souhaite bonne chance pour notre super concours.<br>
-            <a href="/">Proposer une vidéo</a> ou <a href="/">revenir à la page d'accueil</a> ?</p>
+            <a href="/bioinfuse/submit_video/{{member.user.id}}">Proposer une vidéo</a> ou <a href="/bioinfuse/">revenir à la page d'accueil</a> ?</p>
         {% elif member.role == "J" %}
-        <a href="/">Juger une vidéo</a> ou <a href="/">revenir à la page d'accueil</a> ?</p>
+        <a href="/bioinfuse/">Juger une vidéo</a> ou <a href="/bioinfuse/">revenir à la page d'accueil</a> ?</p>
         {% endif %}
         {% else %}
         <header>

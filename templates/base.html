@@ -7,12 +7,12 @@
         <link type="text/css" href="{% static "css/stylesheet.css" %}" rel="stylesheet" />
     </head>
     <body>
-        <header id="mainheader"><a href="/"><img src="/static/img/BioInfuse.png" height="300px"></a></header>
+        <header id="mainheader"><a href="/bioinfuse/"><img src="/static/img/BioInfuse.png" height="300px"></a></header>
         <nav id="mainmenu">
             <ul>
                 <li><a href="/" title="Revenir à l'accueil">Accueil</a></li>
                 {% for p in pages %}
-                	<li><a href="/p/{{p.id}}" title="Lire la page {{p.title}}">{{ p.title }}</a></li>
+                	<li><a href="/bioinfuse/p/{{p.id}}" title="Lire la page {{p.title}}">{{ p.title }}</a></li>
                 {% endfor %}
             </ul>
         </nav>
@@ -25,13 +25,13 @@
                 <div id="options">
                     <h2>Options utilisateur</h2>
                     <ul>
-                        <li><a href="/edit_profile/{{user.id}}/">Modifier mon profil</a></li>
+                        <li><a href="/bioinfuse/edit_profile/{{user.id}}/">Modifier mon profil</a></li>
                         {% if member.role == 'C' %}
                             <li>Soumettre une vidéo</li>
                         {% elif member.role == 'J'  %}
                             <li>Voir les vidéos soumises</li>
                         {% elif member.role == 'A' %}
-                            <li><a href="/manage_members/">Gérer les membres</a></li>
+                            <li><a href="/bioinfuse/manage_members/">Gérer les membres</a></li>
                         {% else %}
                             <li>Oups ! Il semble que vous n'ayez pas de rôle attribué.
                                 Prévenez un administrateur afin qu'il vous assigne un rôle !</li>
@@ -44,7 +44,7 @@
                     <h2>Bienvenue sur BioInfuse</h2>
                     <ul>
                         <li><a href="/accounts/login/">Se connecter</a></li>
-                        <li><a href="/subscribe/">S'inscrire</a></li>
+                        <li><a href="/bioinfuse/subscribe/">S'inscrire</a></li>
                     </ul>
                 </div>
                 {% endif %}

@@ -36,10 +36,10 @@ class Challenge(models.Model):
     is_open = models.BooleanField("Ouvert", default=False)
     start_date = models.DateTimeField("Date de début")
     stop_date = models.DateTimeField("Date de fin")
-    subs_start_date = models.DateTimeField("Date de début d'inscription", default=now)
-    subs_stop_date = models.DateTimeField("Date de fin d'inscription", default=now)
-    subm_start_date = models.DateTimeField("Date de début de soumission", default=now)
-    subm_stop_date = models.DateTimeField("Date de fin de soumission", default=now)
+    subs_start_date = models.DateTimeField("Date de début d'inscription")
+    subs_stop_date = models.DateTimeField("Date de fin d'inscription")
+    subm_start_date = models.DateTimeField("Date de début de soumission")
+    subm_stop_date = models.DateTimeField("Date de fin de soumission")
 
     def __unicode__(self):
         return self.title

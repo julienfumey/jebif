@@ -18,5 +18,4 @@ HTTP_DOMAIN = "https://jebif.fr"
 SECRET_KEY = ''
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 

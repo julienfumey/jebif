@@ -2,6 +2,8 @@ from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
 from bioinfuse.models import *
 from bioinfuse.forms import *
+import dailymotion
+import pp
 # from django.utils.timezone import now
 
 

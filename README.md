@@ -21,7 +21,7 @@ concours, gestion des membres inscrits, rédaction d'information sur les concour
 
 * Dailymotion : `pip install dailymotion`
 * urllib3, module connection : `pip install --upgrade urllib3`
-* parallelpython: `pip install python-pp`
+* parallelpython: `pip install pp`
 
 Required for SSL connection:
-* pip install pyopenssl ndg-httpsclient pyasn1
+* `pip install pyopenssl ndg-httpsclient pyasn1`

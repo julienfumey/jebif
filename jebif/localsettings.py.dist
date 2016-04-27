@@ -1,0 +1,22 @@
+# -*- coding: utf-8
+
+#ALLOWED_HOSTS = ['jebif.fr']
+
+DEFAULT_FROM_EMAIL = "NO-REPLY@jebif.fr"
+SERVER_EMAIL = "webmaster@jebif.fr"
+
+#DATABASES = {'default': {
+#}}
+
+DJANGO_PATH = "/home/jebif/lib/Django-ng/"
+ADMIN_TEMPLATE_DIR = DJANGO_PATH + "django/contrib/admin/templates"
+ADMIN_MEDIA_ROOT = DJANGO_PATH + "django/contrib/admin/media"
+
+ROOT_URL = 'a/' # XXX how to fetch PythonOption ?
+HTTP_DOMAIN = "https://jebif.fr"
+
+SECRET_KEY = ''
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+

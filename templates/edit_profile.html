@@ -14,7 +14,7 @@ Modification du profil de {{ user.username }}
     <header>
         <h1>Modification du profil de {{ member.user }}</h1>
     </header>
-    <form action="/bioinfuse/edit_profile/{{profile_id}}/" method="post">{% csrf_token %}
+    <form action="/a/edit_profile/{{profile_id}}/" method="post">{% csrf_token %}
         <fieldset>
             {{ user_form.as_p }}
             {{ member_form.as_p }}

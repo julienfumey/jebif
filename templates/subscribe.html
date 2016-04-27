@@ -15,12 +15,12 @@ Inscription de nouveau membre
 		<h1>Inscription réussie !</h1>
 	</header>
 	<p>Merci de vous être enregistré pour notre concours {{ show_name }} !<br>
-	<a href="/accounts/login/">Se connecter</a> ou <a href="/bioinfuse/">revenir à la page d'accueil</a> ?</p>
+	<a href="/accounts/login/">Se connecter</a> ou <a href="/a/">revenir à la page d'accueil</a> ?</p>
 	{% else %}
     <header>
         <h1>Création de compte</h1>
     </header>
-    <form action="/bioinfuse/subscribe/" method="post">{% csrf_token %}
+    <form action="/a/subscribe/" method="post">{% csrf_token %}
 		<fieldset>
 			{{ user_form.as_p }}
 			{{ subs_form.as_p }}

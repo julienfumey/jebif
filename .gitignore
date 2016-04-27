@@ -1,6 +1,7 @@
 # Disable precompiled python scripts
 *.py[cod]
 __pycache__/
+django
 
 # Disable sqlite3 database (use only for local tests)
 db.sqlite3

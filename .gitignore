@@ -1,5 +1,6 @@
 # Disable precompiled python scripts
 *.py[cod]
+*.pyc
 __pycache__/
 
 # Disable sqlite3 database (use only for local tests)

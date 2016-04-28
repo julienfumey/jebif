@@ -17,6 +17,15 @@ class SubscriptionForm(forms.ModelForm):
         model = Member
         fields = ('show_name',)
 
+
+class LoginUserForm(forms.ModelForm):
+    password = forms.CharField(label="Mot de passe",
+                               widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'password',)
+
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User

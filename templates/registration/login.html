@@ -10,18 +10,6 @@ Connection
 
 <section id="form">
     <article>
-        {% if registered %}
-        <header>
-            <h1>Connection réussie !</h1>
-        </header>
-        <p>Félicitations pour votre connection {{ show_name }} !<br>
-            {% if member.role == "C" %}
-            Toute l'équipe de BioInfuse vous souhaite bonne chance pour notre super concours.<br>
-            <a href="/a/submit_video/{{member.user.id}}">Proposer une vidéo</a> ou <a href="/a/">revenir à la page d'accueil</a> ?</p>
-        {% elif member.role == "J" %}
-        <a href="/a/">Juger une vidéo</a> ou <a href="/a/">revenir à la page d'accueil</a> ?</p>
-        {% endif %}
-        {% else %}
         <header>
             <h1>Connection</h1>
         </header>
@@ -35,7 +23,6 @@ Connection
                 <input type="submit" value="Se connecter">
             </fieldset>
         </form>
-        {% endif %}
     </article>
 </section>
 

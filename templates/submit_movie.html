@@ -14,7 +14,7 @@ Soumetre une vidéo
     <header>
         <h1>Soumission d'une vidéo</h1>
     </header>
-    <form action="/a/submit_movie/{{ user.id }}" method="post">{% csrf_token %}
+    <form action="{% url 'bioinfuse:submit_movie'  user.id %}" method="post">{% csrf_token %}
         <fieldset>
             {{ submit_movie_form.as_p }}
             <input type="submit" value="Mettre à jour">
@@ -24,7 +24,7 @@ Soumetre une vidéo
     redirigé à la page d'accueil.</p>
         {% else %}
         <p>
-            Vous n'êtes pas autorisé à soumettre une vidéo. <a href="/a/">Retour à la page d'accueil</a>.
+            Vous n'êtes pas autorisé à soumettre une vidéo. <a href="{% url 'index' %}">Retour à la page d'accueil</a>.
         </p>
 	{% endif %}
 	</article>

@@ -14,7 +14,7 @@ Modification du profil de {{ member.user }}
     <header>
         <h1>Modification du profil de {{ changed_member.user }}</h1>
     </header>
-    <form action="/a/edit_member/{{changed_member.user.id}}/" method="post">{% csrf_token %}
+    <form action="{% url 'bioinfuse:edit_member' changed_member.user.id %}" method="post">{% csrf_token %}
         <fieldset>
             {{ user_form.as_p }}
             {{ member_form.as_p }}
@@ -25,7 +25,7 @@ Modification du profil de {{ member.user }}
     redirigé à la page de gestion des membres.</p>
         {% else %}
         <p>
-            Vous n'êtes pas autorisé à gérer les membres. <a href="/a/">Retour à la page d'accueil</a>.
+            Vous n'êtes pas autorisé à gérer les membres. <a href="{% url 'index' %}">Retour à la page d'accueil</a>.
         </p>
 	{% endif %}
 	</article>

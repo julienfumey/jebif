@@ -18,9 +18,9 @@ urlpatterns = [
     # Member
     url(r'^%saccounts/login/$' % ROOT, 'django.contrib.auth.views.login'),
     url(r'^%saccounts/logout/$' % ROOT, 'django.contrib.auth.views.logout', {'next_page': '/%s' % BROOT}),
-    url(r'^%s/subscribe/$' % BROOT, bviews.subscribe, name='subscribe'),
-    url(r'^%s/edit_profile/(?P<member>[0-9]+)' % BROOT, bviews.edit_profile, name='edit_profile'),
-    url(r'^%s/manage_members' % BROOT, bviews.list_members, name="manage_members"),
-    url(r'^%s/edit_member/(?P<member>[0-9]+)' % BROOT, bviews.edit_member, name="edit_member"),
-    url(r'^%s/submit_movie/(?P<member>[0-9]+)$' % BROOT, bviews.submit_movie, name="submit_movie"),
+    url(r'^%ssubscribe/$' % BROOT, bviews.subscribe, name='subscribe'),
+    url(r'^%sedit_profile/(?P<member>[0-9]+)' % BROOT, bviews.edit_profile, name='edit_profile'),
+    url(r'^%smanage_members' % BROOT, bviews.list_members, name="manage_members"),
+    url(r'^%sedit_member/(?P<member>[0-9]+)' % BROOT, bviews.edit_member, name="edit_member"),
+    url(r'^%ssubmit_movie/(?P<member>[0-9]+)$' % BROOT, bviews.submit_movie, name="submit_movie"),
 ]

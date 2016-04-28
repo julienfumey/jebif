@@ -16,8 +16,8 @@ urlpatterns = [
     # Home
     url(r'^%s$' % BROOT, bviews.index, name='index'),
     # Member
-    url(r'^%saccounts/login/$' % ROOT, 'django.contrib.auth.views.login'),
-    url(r'^%saccounts/logout/$' % ROOT, 'django.contrib.auth.views.logout', {'next_page': '/%s' % BROOT}),
+    url(r'^%slogin/$' % ROOT, auth_views.login),
+    url(r'^%saccounts/logout/$' % ROOT, auth_views.logout, {'next_page': '/%s'%BROOT}),
     url(r'^%ssubscribe/$' % BROOT, bviews.subscribe, name='subscribe'),
     url(r'^%sedit_profile/(?P<member>[0-9]+)' % BROOT, bviews.edit_profile, name='edit_profile'),
     url(r'^%smanage_members' % BROOT, bviews.list_members, name="manage_members"),

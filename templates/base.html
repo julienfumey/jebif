@@ -7,7 +7,7 @@
         <link type="text/css" href="{% static "css/stylesheet.css" %}" rel="stylesheet" />
     </head>
     <body>
-        <header id="mainheader"><a href="/a/"><img src="/a/static/img/BioInfuse.png" height="300px"></a></header>
+        <header id="mainheader"><a href="{% url 'bioinfuse:index' %}"><img src="/a/static/img/BioInfuse.png" height="300px"></a></header>
         <nav id="mainmenu">
             <ul>
                 <li><a href="/" title="Revenir à l'accueil">Accueil</a></li>
@@ -25,26 +25,26 @@
                 <div id="options">
                     <h2>Options utilisateur</h2>
                     <ul>
-                        <li><a href="/a/edit_profile/{{user.id}}/">Modifier mon profil</a></li>
+                        <li><a href="{% url 'bioinfuse:edit_profile' user.id %}">Modifier mon profil</a></li>
                         {% if member.role == 'C' %}
                             <li>Soumettre une vidéo</li>
                         {% elif member.role == 'J'  %}
                             <li>Voir les vidéos soumises</li>
                         {% elif member.role == 'A' %}
-                            <li><a href="/a/manage_members/">Gérer les membres</a></li>
+                            <li><a href="{% url 'bioinfuse:manage_members' %}">Gérer les membres</a></li>
                         {% else %}
                             <li>Oups ! Il semble que vous n'ayez pas de rôle attribué.
                                 Prévenez un administrateur afin qu'il vous assigne un rôle !</li>
                         {% endif %}
-                        <li><a href="/a/accounts/logout/">Se déconnecter</a></li>
+                        <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
                     </ul>
                 </div>
                 {% else %}
                 <div id="connection">
                     <h2>Bienvenue sur BioInfuse</h2>
                     <ul>
-                        <li><a href="/a/login/">Se connecter</a></li>
-                        <li><a href="/a/subscribe/">S'inscrire</a></li>
+                        <li><a href="{% url 'login' %}">Se connecter</a></li>
+                        <li><a href="{% url 'bioinfuse:subscribe' %}">S'inscrire</a></li>
                     </ul>
                 </div>
                 {% endif %}

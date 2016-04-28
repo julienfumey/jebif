@@ -1,5 +1,6 @@
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from bioinfuse.models import *
 from bioinfuse.forms import *
@@ -94,7 +95,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('home.html')
+                    return HttpResponseRedirect(reverse('bioinfuse:index'))
                 else:
                     context['error_msg'] = "Le compte n'est pas actif."
             else:
@@ -130,7 +131,7 @@ def edit_profile(request, member):
             get_user.save()
             get_member.show_name = show_name
             get_member.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('bioinfuse:index'))
     context['profile_id'] = get_member.user.id
     context['user_form'] = user_form
     context['member_form'] = member_form
@@ -182,7 +183,7 @@ def edit_member(request, member):
             get_member.show_name = show_name
             get_member.role = member_role
             get_member.save()
-            return HttpResponseRedirect('manage_members.html')
+            return HttpResponseRedirect(reverse('bioinfuse:manage_members'))
     context['role'] = role
     context['changed_member'] = changed_member
     context['user_form'] = user_form

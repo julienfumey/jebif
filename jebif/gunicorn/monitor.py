@@ -4,21 +4,21 @@ import time
 import signal
 import threading
 import atexit
-import queue
+from Queue import Queue
 
 _interval = 1.0
 _times = {}
 _files = []
 
 _running = False
-_queue = queue.Queue()
+_queue = Queue()
 _lock = threading.Lock()
 
 def _restart(path):
     _queue.put(True)
     prefix = 'monitor (pid=%d):' % os.getpid()
-    print('%s Change detected to \'%s\'.' % (prefix, path), file=sys.stderr)
-    print('%s Triggering process restart.' % prefix, file=sys.stderr)
+#    print('%s Change detected to \'%s\'.' % (prefix, path), file=sys.stderr)
+#    print('%s Triggering process restart.' % prefix, file=sys.stderr)
     os.kill(os.getpid(), signal.SIGINT)
 
 
@@ -79,7 +79,7 @@ def start(interval=1.0):
     _lock.acquire()
     if not _running:
         prefix = 'monitor (pid=%d):' % os.getpid()
-        print('%s Starting change monitor.' % prefix, file=sys.stderr)
+#        print('%s Starting change monitor.' % prefix, file=sys.stderr)
         _running = True
         _thread.start()
     _lock.release()

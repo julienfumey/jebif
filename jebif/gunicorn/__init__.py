@@ -1,7 +1,10 @@
 import os
 import sys
 
-paths = ['/home/jebif/apps/jebif-ng']
+paths = [
+    '/home/jebif/.local/lib64/python2.7/site-packages',
+    '/home/jebif/apps/jebif-ng'
+]
 for p in paths :
 	if p not in sys.path :
 		sys.path.append(p)

@@ -8,17 +8,19 @@ from django.conf.urls.static import static
 
 ROOT = settings.ROOT_URL
 
+BROOT = "%sbioinfuse/" % ROOT
+
 urlpatterns = [
     # Administration
     url(r'^%sadmin/' % ROOT, include(admin.site.urls)),
     # Home
-    url(r'^a/$', bviews.index, name='index'),
+    url(r'^%s$' % BROOT, bviews.index, name='index'),
     # Member
-    url(r'^a/login/$', auth_views.login),
-    url(r'^a/accounts/logout/$', auth_views.logout, {'next_page': '/a/'}),
-    url(r'a/subscribe/$', bviews.subscribe, name='subscribe'),
-    url(r'a/edit_profile/(?P<member>[0-9]+)', bviews.edit_profile, name='edit_profile'),
-    url(r'a/manage_members', bviews.list_members, name="manage_members"),
-    url(r'a/edit_member/(?P<member>[0-9]+)', bviews.edit_member, name="edit_member"),
-    url(r'a/submit_movie/(?P<member>[0-9]+)$', bviews.submit_movie, name="submit_movie"),
+    url(r'^%slogin/$' % ROOT, auth_views.login),
+    url(r'^%saccounts/logout/$' % ROOT, auth_views.logout, {'next_page': '/%s'%BROOT}),
+    url(r'^%ssubscribe/$' % BROOT, bviews.subscribe, name='subscribe'),
+    url(r'^%sedit_profile/(?P<member>[0-9]+)' % BROOT, bviews.edit_profile, name='edit_profile'),
+    url(r'^%smanage_members' % BROOT, bviews.list_members, name="manage_members"),
+    url(r'^%sedit_member/(?P<member>[0-9]+)' % BROOT, bviews.edit_member, name="edit_member"),
+    url(r'^%ssubmit_movie/(?P<member>[0-9]+)$' % BROOT, bviews.submit_movie, name="submit_movie"),
 ]

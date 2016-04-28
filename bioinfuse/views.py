@@ -1,5 +1,6 @@
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
+from django.contrib.auth import authenticate, login
 from bioinfuse.models import *
 from bioinfuse.forms import *
 import dailymotion
@@ -77,6 +78,31 @@ def subscribe(request):
     context['registered'] = registered
 
     return render(request, "subscribe.html", context)
+
+
+def login(request):
+    context = base(request)
+    if request.method == 'GET':
+        user_form = LoginUserForm()
+    else:
+        user_form = LoginUserForm(request.POST)
+        if user_form.is_valid():
+            username = user_form.cleaned_data["username"]
+            password = user_form.cleaned_data["password"]
+            user = authenticate(username=username,
+                                password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('home.html')
+                else:
+                    context['error_msg'] = "Le compte n'est pas actif."
+            else:
+                context['error_msg'] = "Le compte n'existe pas."
+
+    context['user_form'] = user_form
+
+    return render(request, "registration/login.html", context)
 
 
 def edit_profile(request, member):
@@ -165,6 +191,14 @@ def edit_member(request, member):
 
 
 def submit_movie(request, member):
+    def submit_movie(d, file, data):
+        url = d.upload(file)
+        movie = d.post('/me/videos',
+                       {'url': url, 'title': data['title'],
+                        'published': 'true', 'channel': 'tech',
+                        'private': 'true',
+                        'description': data['description']})
+        return movie
     context = base(request)
     role = Member.objects.get(user=member).role
     if request.method == 'GET':

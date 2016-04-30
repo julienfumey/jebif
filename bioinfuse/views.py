@@ -4,9 +4,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from bioinfuse.models import *
 from bioinfuse.forms import *
+import datetime
+from parameters import *
 import dailymotion
 import pp
-# from django.utils.timezone import now
 
 def base(request):
     total_member = Member.objects.count()
@@ -23,11 +24,22 @@ def base(request):
     if request.user.id:
         member_id = request.user.id
         context['member'] = Member.objects.get(user=member_id)
-    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')
+    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')[0]
     if challenge:
-        context['challenge'] = challenge[0]
+        context['challenge'] = challenge
+        today = datetime.datetime.now().strftime('%s')
+        context['today'] = today
+        subm_start = challenge.subm_start_date.strftime('%s')
+        subm_stop = challenge.subm_stop_date.strftime('%s')
+        context['subm_start'] = subm_start
+        context['subm_stop'] = subm_stop
+        if today > subm_start and today < subm_stop:
+            context['submit_ok'] = True
+        else:
+            context['submit_ok'] = False
     else:
         context['challenge.is_open'] = False
+        context['submit_ok'] = False
     return context
 
 
@@ -196,20 +208,54 @@ def edit_member(request, member):
 
 
 def submit_movie(request, member):
-    def submit_movie(d, file, data):
+    def submit_movie(d, file, data, m_id):
+        q_movie = Movie.objects.get(id=m_id)
         url = d.upload(file)
         movie = d.post('/me/videos',
                        {'url': url, 'title': data['title'],
                         'published': 'true', 'channel': 'tech',
                         'private': 'true',
                         'description': data['description']})
-        return movie
+        url = d.get('/video/'+movie,
+                    {'fields': 'embed_url', 'id': id_movie})['embed_url']
+        q_movie.url = url
+        q_movie.save()
+
     context = base(request)
+    context['API_KEY'] = API_KEY
+    context['API_SECRET'] = API_SECRET
+    context['PASSWORD'] = PASSWORD
+    context['USERNAME'] = USERNAME
     role = Member.objects.get(user=member).role
+    member = Member.objects.get(user=member)
+    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')[0]
     if request.method == 'GET':
         submit_movie_form = SubmitMovieForm({'submit_date': now()})
     else:
-        submit_movie_form = SubmitMovieForm(request.POST)
+        submit_movie_form = SubmitMovieForm(request.POST, request.FILES)
+
+        if submit_movie_form.is_valid():
+            title = submit_movie_form.cleaned_data['title']
+            description = submit_movie_form.cleaned_data['description']
+            submit_date = submit_movie_form.cleaned_data['submit_date']
+            file_movie = request.FILES['file_movie']
+            associated_key = AssociatedKey.objects.get(associated_key=member.associated_key)
+            register_movie = Movie(challenge=challenge,
+                                   associated_key=associated_key,
+                                   title=title,
+                                   description=description,
+                                   submit_date=submit_date)
+            register_movie.save()
+            m_id = register_movie.id
+
+            d = dailymotion.Dailymotion()
+            d.set_grant_type('password', api_key=API_KEY,
+                             api_secret=API_SECRET, scope=['manage_videos'],
+                             info={'username': USERNAME, 'password': PASSWORD})
+            data = {'title': title, 'description': description}
+            job = pp.Server()
+            job.submit(submit_movie, (d, file_movie, data, m_id))
+            return HttpResponseRedirect(reverse('bioinfuse:index'))
 
     context['submit_movie_form'] = submit_movie_form
     context['role'] = role

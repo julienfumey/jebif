@@ -54,9 +54,7 @@ class NewChallenge(forms.ModelForm):
 '''
 
 class SubmitMovieForm(forms.ModelForm):
-#    submit_date = forms.DateTimeField(label="Date de soumission",
-#                                      widget=forms.DateTimeInput())
     file_movie = forms.FileField(label="Votre vidéo")
     class Meta:
         model = Movie
-        exclude = ('associated_key', 'movie_url', 'published')
+        exclude = ('challenge', 'associated_key', 'movie_url', 'published')

@@ -222,10 +222,6 @@ def submit_movie(request, member):
         q_movie.save()
 
     context = base(request)
-    context['API_KEY'] = API_KEY
-    context['API_SECRET'] = API_SECRET
-    context['PASSWORD'] = PASSWORD
-    context['USERNAME'] = USERNAME
     role = Member.objects.get(user=member).role
     member = Member.objects.get(user=member)
     challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')[0]

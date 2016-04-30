@@ -8,7 +8,6 @@ import dailymotion
 import pp
 # from django.utils.timezone import now
 
-
 def base(request):
     total_member = Member.objects.count()
     total_challenger = Member.objects.filter(role='C').count()
@@ -30,6 +29,11 @@ def base(request):
     else:
         context['challenge.is_open'] = False
     return context
+
+
+# Fix login redirection problem
+def home(request):
+    return HttpResponseRedirect(reverse('bioinfuse:index'))
 
 
 def index(request):

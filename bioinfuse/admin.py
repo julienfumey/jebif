@@ -17,6 +17,11 @@ class AssociatedKeyAdmin(admin.ModelAdmin):
     list_filter = ('challenge', 'candidate')
     list_display = ('challenge', 'candidate')
 
+class MovieAdmin(admin.ModelAdmin):
+    list_filter = ('challenge', 'title', 'submit_date')
+    list_display = ('challenge', 'title', 'submit_date')
+
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Challenge, ChallengeAdmin)
 admin.site.register(AssociatedKey, AssociatedKeyAdmin)
+admin.site.register(Movie, MovieAdmin)

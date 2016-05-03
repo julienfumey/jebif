@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -5,21 +6,22 @@ from django.contrib.auth import authenticate, login
 from bioinfuse.models import *
 from bioinfuse.forms import *
 import datetime
-from parameters import *
-import dailymotion
-import pp
+import os
+import subprocess
 
 def base(request):
     total_member = Member.objects.count()
     total_challenger = Member.objects.filter(role='C').count()
     total_jury = Member.objects.filter(role='J').count()
     total_admin = Member.objects.filter(role='A').count()
+    total_movie = Movie.objects.count()
     context = {
         'version': get_version(),
         'total_member': total_member,
         'total_challenger': total_challenger,
         'total_jury': total_jury,
         'total_admin': total_admin,
+        'total_movie': total_movie,
     }
     if request.user.id:
         member_id = request.user.id
@@ -208,18 +210,13 @@ def edit_member(request, member):
 
 
 def submit_movie(request, member):
-    def submit_movie(d, file, data, m_id):
-        q_movie = Movie.objects.get(id=m_id)
-        url = d.upload(file)
-        movie = d.post('/me/videos',
-                       {'url': url, 'title': data['title'],
-                        'published': 'true', 'channel': 'tech',
-                        'private': 'true',
-                        'description': data['description']})
-        url = d.get('/video/'+movie,
-                    {'fields': 'embed_url', 'id': id_movie})['embed_url']
-        q_movie.url = url
-        q_movie.save()
+    def handle_file(f, name, ext):
+        name = "media/" + name.replace(" ", "")
+        name += "." + ext
+        with open(name, 'wb+') as destination:
+            for chunk in f.chunks():
+                destination.write(chunk)
+        return name
 
     context = base(request)
     role = Member.objects.get(user=member).role
@@ -233,24 +230,24 @@ def submit_movie(request, member):
         if submit_movie_form.is_valid():
             title = submit_movie_form.cleaned_data['title']
             description = submit_movie_form.cleaned_data['description']
-            submit_date = submit_movie_form.cleaned_data['submit_date']
             file_movie = request.FILES['file_movie']
-            associated_key = AssociatedKey.objects.get(associated_key=member.associated_key)
-            register_movie = Movie(challenge=challenge,
-                                   associated_key=associated_key,
-                                   title=title,
-                                   description=description,
-                                   submit_date=submit_date)
+            sub_date = now() # don't remove it, necessary in line 248!
+            ext = str(file_movie).split('.')[-1].lower()
+            name = handle_file(file_movie, title, ext)
+            print(name)
+            associated_key = AssociatedKey.objects.get(
+                associated_key=member.associated_key)
+            register_movie = Movie.objects.create(challenge=challenge,
+                                                  associated_key=associated_key,
+                                                  title=title,
+                                                  description=description,
+                                                  submit_date=sub_date)
             register_movie.save()
-            m_id = register_movie.id
-
-            d = dailymotion.Dailymotion()
-            d.set_grant_type('password', api_key=API_KEY,
-                             api_secret=API_SECRET, scope=['manage_videos'],
-                             info={'username': USERNAME, 'password': PASSWORD})
-            data = {'title': title, 'description': description}
-            job = pp.Server()
-            job.submit(submit_movie, (d, file_movie, data, m_id))
+            m_id = Movie.objects.get(challenge=challenge,
+                                     associated_key=associated_key,
+                                     submit_date=sub_date).id
+            script_path = os.path.join(os.path.abspath('..'), "jebif/bioinfuse")
+            subprocess.Popen(["python "+script_path+"/upload_movie.py", "-i "+str(m_id)+" -m "+str(name)])
             return HttpResponseRedirect(reverse('bioinfuse:index'))
 
     context['submit_movie_form'] = submit_movie_form

@@ -17,7 +17,7 @@ Soumetre une vidéo
     <form action="{% url 'bioinfuse:submit_movie'  user.id %}" method="post" enctype="multipart/form-data">{% csrf_token %}
         <fieldset>
             {{ submit_movie_form.as_p }}
-            <input type="submit" value="Mettre à jour">
+            <input type="submit" value="Soumettre la vidéo">
         </fieldset>
     </form>
     <p class="info">Une fois que vous aurez validé le formulaire, vous serez automatiquement

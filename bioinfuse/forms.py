@@ -57,4 +57,5 @@ class SubmitMovieForm(forms.ModelForm):
     file_movie = forms.FileField(label="Votre vidéo")
     class Meta:
         model = Movie
-        exclude = ('challenge', 'associated_key', 'movie_url', 'published')
+        exclude = ('challenge', 'associated_key', 'movie_url', 'published',
+                   'submit_date')

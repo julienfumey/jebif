@@ -20,4 +20,4 @@ urlpatterns = [
     url(r'^%s$' % ROOT, bviews.home, name="home"),
     # BioInfuse
     url(r'%s' % BROOT, include('bioinfuse.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

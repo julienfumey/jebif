@@ -54,7 +54,7 @@ class AssociatedKey(models.Model):
 
 class Movie(models.Model):
     challenge = models.ForeignKey(Challenge)
-    associated_key = models.ForeignKey(AssociatedKey)
+    associated_key = models.OneToOneField(AssociatedKey, unique=True)
     title = models.CharField("Titre", max_length=120,
                              help_text="Ce titre sera aussi utilisé sur "
                                        "notre compte DailyMotion")
@@ -68,6 +68,9 @@ class Movie(models.Model):
                                                  "sous forme jj/mm/aaaa "
                                                  "hh:mm:ss")
     published = models.BooleanField("Publié", default=False)
+
+    def __unicode__(self):
+        return self.title
 
 """
 class Vote(models.Model):

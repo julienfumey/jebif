@@ -23,12 +23,6 @@ ADMINS = (
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Open a terminal and launch:
-# python -c 'import random; print "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)])'
-# Then copy paste the result in the SECRET_KEY variable
-#SECRET_KEY = ''
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -92,7 +86,6 @@ DATABASES = {
 ROOT_URL = ''
 from jebif.localsettings import *
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -131,5 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"),)
-STATIC_URL = '/%sstatic/' % ROOT_URL
-
+STATIC_URL = "/%sstatic/" % ROOT_URL
+# Media files (movies)
+MEDIA_ROOT = (os.path.join(BASE_DIR, "media/"))
+MEDIA_URL = "/%smedia/" % ROOT_URL

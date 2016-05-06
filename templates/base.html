@@ -10,7 +10,7 @@
         <header id="mainheader"><a href="{% url 'bioinfuse:index' %}"><img src="/a/static/img/BioInfuse.png" height="300px"></a></header>
         <nav id="mainmenu">
             <ul>
-                <li><a href="/" title="Revenir à l'accueil">Accueil</a></li>
+                <li><a href="{% url 'bioinfuse:index' %}" title="Revenir à l'accueil">Accueil</a></li>
                 {% for p in pages %}
                 	<li><a href="/a/p/{{p.id}}" title="Lire la page {{p.title}}">{{ p.title }}</a></li>
                 {% endfor %}
@@ -43,11 +43,15 @@
                 </div>
                 {% else %}
                 <div id="connection">
-                    <h2>Bienvenue sur BioInfuse</h2>
+                  <h2>Bienvenue sur BioInfuse</h2>
+		  {% if challenge %}
                     <ul>
                         <li><a href="{% url 'login' %}">Se connecter</a></li>
                         <li><a href="{% url 'bioinfuse:subscribe' %}">S'inscrire</a></li>
                     </ul>
+		    {% else %}
+		  <p>Aucun concours ouvert pour l'instant.</p>
+		  {% endif %}
                 </div>
                 {% endif %}
                 <div id="statistics">

@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 from django import get_version
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -6,8 +6,8 @@ from django.contrib.auth import authenticate, login
 from bioinfuse.models import *
 from bioinfuse.forms import *
 import datetime
-import os
-import subprocess
+import dailymotion
+from parameters import *
 
 def base(request):
     total_member = Member.objects.count()
@@ -26,8 +26,9 @@ def base(request):
     if request.user.id:
         member_id = request.user.id
         context['member'] = Member.objects.get(user=member_id)
-    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')[0]
-    if challenge:
+    challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')
+    if len(challenge) > 0:
+        challenge = challenge[0]
         context['challenge'] = challenge
         today = datetime.datetime.now().strftime('%s')
         context['today'] = today
@@ -218,6 +219,19 @@ def submit_movie(request, member):
                 destination.write(chunk)
         return name
 
+    def upload_movie(movie_id, file_name):
+        d = dailymotion.Dailymotion()
+        d.set_grant_type('password', api_key=API_KEY,
+                         api_secret=API_SECRET, scope=['manage_videos'],
+                         info={'username': USERNAME, 'password': PASSWORD})
+        q_movie = Movie.objects.get(id=movie_id)
+        url = d.upload(file_name)
+        movie = d.post('/me/videos',
+                       {'url': url, 'title': q_movie.title,
+                        'published': 'true', 'channel': 'tech',
+                        'private': 'true',
+                        'description': q_movie.description})
+    
     context = base(request)
     role = Member.objects.get(user=member).role
     member = Member.objects.get(user=member)

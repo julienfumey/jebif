@@ -21,3 +21,10 @@ concours, gestion des membres inscrits, rédaction d'information sur les concour
 
 * Dailymotion : `pip install dailymotion`
 * urllib3, module connection : `pip install --upgrade urllib3`
+
+### Paramètrages
+
+Pour utiliser cette application dans votre projet, vous devrez modifier les fichiers suivants :
+
+* jebif/localsettings.py.dist : à copier dans jebif/localsettings.py et à modifier au niveau des paramètres attendus par Django (cf. Settings dans la documentation officielle pour plus de détails)
+* bioinfuse/parameters.py : à copier dans bioinfuse/parameters.py et à modifier au niveau des paramètres attendus par Dailymotion

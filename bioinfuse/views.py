@@ -260,8 +260,7 @@ def submit_movie(request, member):
             m_id = Movie.objects.get(challenge=challenge,
                                      associated_key=associated_key,
                                      submit_date=sub_date).id
-            script_path = os.path.join(os.path.abspath('..'), "jebif/bioinfuse")
-            subprocess.Popen(["python "+script_path+"/upload_movie.py", "-i "+str(m_id)+" -m "+str(name)])
+            upload_movie(m_id, name)
             return HttpResponseRedirect(reverse('bioinfuse:index'))
 
     context['submit_movie_form'] = submit_movie_form

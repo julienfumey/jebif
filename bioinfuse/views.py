@@ -231,6 +231,12 @@ def submit_movie(request, member):
                         'published': 'true', 'channel': 'tech',
                         'private': 'true',
                         'description': q_movie.description})
+        list = d.get('/videos', {'fields': 'user,id,title, url,', 'owner': owner, 'private': 1})['list']
+        for l in list:
+            if l['id'] == movie['id']:
+                url = d.get('/video/' + l['id'], {'fields': 'title,description,url'})['url']
+                q_movie.movie_url = url
+                q_movie.save()
     
     context = base(request)
     role = Member.objects.get(user=member).role

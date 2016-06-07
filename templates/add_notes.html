@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Évaluation d'une vidéo
+
+{% endblock %}
+
+{% block content %}
+
+<section id="manage">
+    <article>
+	{% if user.is_authenticated and role == 'J' %}
+    <header>
+        <h1>Évaluation de la vidéo {{ movie }}</h1>
+    </header>
+    <form action="{% url 'bioinfuse:add_notes' movie_id %}" method="post">{% csrf_token %}
+    <fieldset>
+        <legend>Notes :</legend>
+        {{ notes_form.as_p }}
+    </fieldset>
+    <fieldset>
+        <legend>Commentaire :</legend>
+        <p class="info">Vous pouvez utiliser du Markdown pour la mise en page.</p>
+        {{ comment_form.as_p }}
+    </fieldset>
+    <fieldset>
+        <legend>Soumettre l'évaluation</legend>
+        <input type="reset" value="Effacer">&nbsp;
+        <input type="submit" value="Mettre à jour">
+    </fieldset>
+    </form>
+    {% else %}
+        <p>
+            Vous n'êtes pas autorisé à évaluer les vidéos. <a href="{% url 'bioinfuse:index' %}">Retour à la page d'accueil</a>.
+        </p>
+	{% endif %}
+	</article>
+</section>
+
+{% endblock %}

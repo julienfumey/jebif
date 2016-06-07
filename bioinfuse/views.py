@@ -15,6 +15,7 @@ def base(request):
     total_jury = Member.objects.filter(role='J').count()
     total_admin = Member.objects.filter(role='A').count()
     total_movie = Movie.objects.count()
+    pages = Page.objects.filter(published=True).order_by('title')
     context = {
         'version': get_version(),
         'total_member': total_member,
@@ -22,8 +23,9 @@ def base(request):
         'total_jury': total_jury,
         'total_admin': total_admin,
         'total_movie': total_movie,
+        'pages': pages,
     }
-    if request.user.id:
+    if request.user.id != None:
         member_id = request.user.id
         context['member'] = Member.objects.get(user=member_id)
     challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')
@@ -230,6 +232,7 @@ def submit_movie(request, member):
     role = Member.objects.get(user=member).role
     member = Member.objects.get(user=member)
     challenge = Challenge.objects.filter(is_open=True).order_by('stop_date')[0]
+    is_submit = False
     if request.method == 'GET':
         submit_movie_form = SubmitMovieForm({'submit_date': now()})
     else:
@@ -254,8 +257,56 @@ def submit_movie(request, member):
                                      associated_key=associated_key,
                                      submit_date=sub_date).id
             upload_movie(m_id, name)
-            return HttpResponseRedirect(reverse('bioinfuse:index'))
+            is_submit = True
 
     context['submit_movie_form'] = submit_movie_form
     context['role'] = role
+    context['is_submit'] = is_submit
     return render(request, "submit_movie.html", context)
+
+
+def show_page(request, page):
+    context = base(request)
+    try:
+        page = Page.objects.get(id=page)
+    except:
+        page = {}
+    context['page'] = page
+
+    return render(request, "show_page.html", context)
+
+def list_movies(request):
+    context = base(request)
+    movies = Movie.objects.all()
+    context['movies'] = movies
+    if request.user.id:
+        role = Member.objects.get(user=request.user.id).role
+    else:
+        role = 'I'
+    context['note'] = []
+    for i in range(0, len(movies)):
+        if Vote.objects.filter(id_movie=movies[i].id):
+            evaluation = Vote.objects.filter(id_movie=movies[i].id)
+            evalution.note = evaluation.global_note + evaluation.artistic_note + \
+                evaluation.originality_note + evaluation.investment_note + \
+                evaluation.take-home_message_note + evaluation.understable_note + \
+                evaluation.scientific_note + evaluation.captive_interest_note + \
+                evaluation.rigorous_note
+            context['note'].append(evaluation)
+            #context['movies.comment'] = evaluation.comment
+        else:
+            context['note'].append('-')
+            #context['movies.comment'] = ""
+    context['role'] = role
+    print(context['movies'])
+    return render(request, "manage_notes.html", context)
+
+def add_notes(request, movie):
+    context = base(request)
+    context['movie_id'] = movie
+    if request.user.id:
+        role = Member.objects.get(user=request.user.id).role
+    else:
+        role = 'I'
+    context['role'] = role
+    return render(request, "add_notes.html", context)

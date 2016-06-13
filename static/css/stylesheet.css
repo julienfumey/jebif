@@ -23,7 +23,7 @@ Main menu style
 nav#mainmenu {
     background: #68A7DC;
     color: #0B071E;
-    line-height: 1.3em;
+    height: 1.4em;
     font-size: 1.2em;
 }
 nav#mainmenu a {
@@ -141,7 +141,7 @@ section#manage table td {
 /****************
 Page style
 ****************/
-section#pag e article {
+section#page article {
     background: #ddd;
     border-radius: 10px;
     margin: 0 auto;

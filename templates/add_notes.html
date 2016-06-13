@@ -14,6 +14,13 @@
     <header>
         <h1>Évaluation de la vidéo {{ movie }}</h1>
     </header>
+    <p>
+        <h2>Vidéo :</h2>
+        <iframe frameborder="0" width="480" height="270"
+                src="{{ movie_url }}" allowfullscreen></iframe>
+        <h2>Description :</h2>
+        <p>{{ movie_desc }}</p>
+    </p>
     <form action="{% url 'bioinfuse:add_notes' movie_id %}" method="post">{% csrf_token %}
     <fieldset>
         <legend>Notes :</legend>
@@ -27,7 +34,7 @@
     <fieldset>
         <legend>Soumettre l'évaluation</legend>
         <input type="reset" value="Effacer">&nbsp;
-        <input type="submit" value="Mettre à jour">
+        <input type="submit" value="Voter">
     </fieldset>
     </form>
     {% else %}

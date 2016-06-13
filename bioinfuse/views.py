@@ -8,6 +8,7 @@ from bioinfuse.forms import *
 import datetime
 import dailymotion
 from parameters import *
+import re
 
 def base(request):
     total_member = Member.objects.count()
@@ -225,6 +226,11 @@ def submit_movie(request, member):
                         'published': 'true', 'channel': 'tech',
                         'private': 'true',
                         'description': q_movie.description})
+        """
+        WARNING: the below part is wrong. The actual URL stored in DB is not in
+                 an embedding format! Need to retrieve the embed_url field from
+                 Dailymotion
+        """
         q_movie.movie_url = 'http://www.dailymotion.com/video/' + str(movie['id'])
         q_movie.save()
     
@@ -275,6 +281,7 @@ def show_page(request, page):
 
     return render(request, "show_page.html", context)
 
+
 def list_movies(request):
     context = base(request)
     movies = Movie.objects.all()
@@ -283,30 +290,96 @@ def list_movies(request):
         role = Member.objects.get(user=request.user.id).role
     else:
         role = 'I'
-    context['note'] = []
     for i in range(0, len(movies)):
         if Vote.objects.filter(id_movie=movies[i].id):
-            evaluation = Vote.objects.filter(id_movie=movies[i].id)
-            evalution.note = evaluation.global_note + evaluation.artistic_note + \
-                evaluation.originality_note + evaluation.investment_note + \
-                evaluation.take-home_message_note + evaluation.understable_note + \
-                evaluation.scientific_note + evaluation.captive_interest_note + \
-                evaluation.rigorous_note
-            context['note'].append(evaluation)
-            #context['movies.comment'] = evaluation.comment
+            evaluation = Vote.objects.get(id_movie=movies[i].id)
+            movies[i].note = int(evaluation.global_note)
+            movies[i].note += int(evaluation.artistic_note)
+            movies[i].note += int(evaluation.originality_note)
+            movies[i].note += int(evaluation.investment_note)
+            movies[i].note += int(evaluation.take_home_message_note)
+            movies[i].note += int(evaluation.understandable_note)
+            movies[i].note += int(evaluation.scientific_note)
+            movies[i].note += int(evaluation.captive_interest_note)
+            movies[i].note += int(evaluation.rigorous_note)
+            movies[i].comment = evaluation.comment
         else:
-            context['note'].append('-')
-            #context['movies.comment'] = ""
+            movies[i].note = '-'
+            movies[i].comment = '-'
     context['role'] = role
-    print(context['movies'])
     return render(request, "manage_notes.html", context)
 
-def add_notes(request, movie):
+
+def add_notes(request, movie_id):
     context = base(request)
-    context['movie_id'] = movie
+    context['movie_id'] = movie_id
+    movie = Movie.objects.get(id=movie_id)
+    #challenge = Challenge.objects.get(movie=movie)
+    """
+    WARNING: the below part is a fix. The actual URL stored in DB is not in
+             an embedding format! Miss embed/ before video/
+    """
+    d = dailymotion.Dailymotion()
+    d.set_grant_type('password', api_key=API_KEY,
+                     api_secret=API_SECRET, scope=['manage_videos'],
+                     info={'username': USERNAME, 'password': PASSWORD})
+    daily_id = re.sub(r'http:\/\/www.dailymotion.com\/video\/', '', movie.movie_url)
+    movie_url = d.get('/video/' + daily_id, {'fields': 'embed_url'})['embed_url']
     if request.user.id:
         role = Member.objects.get(user=request.user.id).role
     else:
         role = 'I'
+    if request.method == 'GET':
+        try:
+            votes = Vote.objects.get(id_movie=movie_id)
+            notes_form = VoteNotesForm({'global_note': votes.global_note,
+                                        'artistic_note': votes.artistic_note,
+                                        'originality_note': votes.originality_note,
+                                        'investment_note': votes.investment_note,
+                                        'take_home_message_note': votes.take_home_message_note,
+                                        'understandable_note': votes.understandable_note,
+                                        'scientific_note': votes.scientific_note,
+                                        'captive_interest_note': votes.captive_interest_note,
+                                        'rigorous_note': votes.rigorous_note})
+            comment_form = VoteCommentForm({'comment': votes.comment})
+        except:
+            notes_form = VoteNotesForm()
+            comment_form = VoteCommentForm()
+    else:
+        notes_form = VoteNotesForm(request.POST)
+        comment_form = VoteCommentForm(request.POST)
+        if notes_form.is_valid() and comment_form.is_valid() and role == 'J':
+            membre = Member.objects.get(user=request.user.id)
+            comment = comment_form.cleaned_data['comment']
+            global_note = notes_form.cleaned_data['global_note']
+            artistic = notes_form.cleaned_data['artistic_note']
+            originality = notes_form.cleaned_data['originality_note']
+            investment = notes_form.cleaned_data['investment_note']
+            take_home_message = notes_form.cleaned_data['take_home_message_note']
+            understandable = notes_form.cleaned_data['understandable_note']
+            scientific = notes_form.cleaned_data['scientific_note']
+            captive = notes_form.cleaned_data['captive_interest_note']
+            rigorous = notes_form.cleaned_data['rigorous_note']
+            submit_notes = Vote.objects.create(id_jury=membre,
+                                               id_challenge=movie.challenge,
+                                               id_movie=movie,
+                                               global_note=global_note,
+                                               artistic_note=artistic,
+                                               originality_note=originality,
+                                               investment_note=investment,
+                                               take_home_message_note=take_home_message,
+                                               understandable_note=understandable,
+                                               scientific_note=scientific,
+                                               captive_interest_note=captive,
+                                               rigorous_note=rigorous,
+                                               comment=comment)
+            submit_notes.save()
+
+            return HttpResponseRedirect(reverse('bioinfuse:manage_notes'))
+
     context['role'] = role
+    context['movie_url'] = movie_url
+    context['movie_desc'] = movie.description
+    context['notes_form'] = notes_form
+    context['comment_form'] = comment_form
     return render(request, "add_notes.html", context)

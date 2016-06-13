@@ -16,5 +16,5 @@ urlpatterns = [
     url(r'^submit_movie/(?P<member>[0-9]+)$', views.submit_movie, name="submit_movie"),
     url(r'^page/(?P<page>[0-9]+)$', views.show_page, name="page"),
     url(r'^manage_notes', views.list_movies, name="manage_notes"),
-    url(r'^add_notes/(?P<movie>[0-9]+)$', views.add_notes, name="add_notes"),
+    url(r'^add_notes/(?P<movie_id>[0-9]+)$', views.add_notes, name="add_notes"),
 ]

@@ -118,19 +118,19 @@ class Vote(models.Model):
     id_movie = models.ForeignKey(Movie)
     id_jury = models.ForeignKey(Member)
     id_challenge = models.ForeignKey(Challenge)
-    global_note = models.CharField("Globale", max_length=1, choices=notes, default='0')
-    artistic_note = models.CharField("Artistique", max_length=1, choices=notes, default='0')
-    originality_note = models.CharField("Originalité du sujet", max_length=1, choices=notes, default='0')
-    investment_note = models.CharField("Moyens investis", max_length=1, choices=notes, default='0')
-    take_home_message_note = models.CharField("Take-home message", max_length=1, choices=notes, default='0')
-    understandable_note = models.CharField("Compréhensible par la cible", max_length=1, choices=notes, default='0')
-    scientific_note = models.CharField("Scientifique", max_length=1, choices=notes, default='0')
-    captive_interest_note = models.CharField("Captive l'intérêt", max_length=1, choices=notes, default='0')
-    rigorous_note = models.CharField("Rigueur scientifique", max_length=1, choices=notes, default='0')
+    global_note = models.CharField("Globale", max_length=2, choices=notes, default='0')
+    artistic_note = models.CharField("Artistique", max_length=2, choices=notes, default='0')
+    originality_note = models.CharField("Originalité du sujet", max_length=2, choices=notes, default='0')
+    investment_note = models.CharField("Moyens investis", max_length=2, choices=notes, default='0')
+    take_home_message_note = models.CharField("Take-home message", max_length=2, choices=notes, default='0')
+    understandable_note = models.CharField("Compréhensible par la cible", max_length=2, choices=notes, default='0')
+    scientific_note = models.CharField("Scientifique", max_length=2, choices=notes, default='0')
+    captive_interest_note = models.CharField("Captive l'intérêt", max_length=2, choices=notes, default='0')
+    rigorous_note = models.CharField("Rigueur scientifique", max_length=2, choices=notes, default='0')
     comment = models.TextField("Votre commentaire :")
 
     def __unicode__(self):
         return self.id_jury
 
-    def content_markdown(self):
+    def comment_markdown(self):
         return mark_safe(markdown.markdown(self.comment))

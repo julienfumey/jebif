@@ -26,9 +26,9 @@ Gestion des notes
         {% for movie in movies %}
         <tr>
             <td><a href="{% url 'bioinfuse:add_notes' movie.id %}">{{movie.title}}</a></td>
-            <td>{{movie.challenge}}</td>
-            <td>{{evaluation.commen}}</td>
-            <td>{{note}}</td>
+            <td>{{ movie.challenge }}</td>
+            <td>{{ movie.comment.content_markdown }}</td>
+            <td>{{ movie.note }}/90</td>
         </tr>
         {% empty %}
         <tr>

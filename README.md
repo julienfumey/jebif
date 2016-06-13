@@ -21,6 +21,7 @@ concours, gestion des membres inscrits, rédaction d'information sur les concour
 
 * Dailymotion : `pip install dailymotion`
 * urllib3, module connection : `pip install --upgrade urllib3`
+* Markdown : `pip install markdown`
 
 ### Paramètrages
 

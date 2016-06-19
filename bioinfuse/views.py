@@ -331,7 +331,7 @@ def add_notes(request, movie_id):
         role = 'I'
     if request.method == 'GET':
         try:
-            votes = Vote.objects.get(id_movie=movie_id)
+            votes = Vote.objects.get(id_movie=movie_id, user=request.user.id)
             notes_form = VoteNotesForm({'global_note': votes.global_note,
                                         'artistic_note': votes.artistic_note,
                                         'originality_note': votes.originality_note,
